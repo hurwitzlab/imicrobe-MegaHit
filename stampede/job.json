@@ -1,0 +1,8 @@
+{
+  "name": "app-name",
+  "appId": "app-name-0.0.1",
+  "archive": true,
+  "inputs": {
+    "INPUT_DIR": "/iplant/home/<developer>/<dir>"
+  }
+}

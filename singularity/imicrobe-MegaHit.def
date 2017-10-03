@@ -1,0 +1,41 @@
+Bootstrap: docker
+From: ubuntu:latest
+
+%runscript
+
+    echo "Hello!"
+
+%setup
+    # mount the imicrobe-MegaHit directory for use in %post
+    mkdir "$SINGULARITY_ROOTFS/imicrobe-MegaHit"
+    mount --no-mtab --bind `pwd` "$SINGULARITY_ROOTFS/imicrobe-MegaHit"
+
+%post
+    apt update
+    apt install -y apt-utils git zlib1g-dev zip build-essential python
+
+    # create a directory for installed dependencies
+    APP_DIR=/megahit-app
+    mkdir -p $APP_DIR
+
+    # install MegaHit
+    cd $APP_DIR
+    git clone https://github.com/voutcn/megahit.git
+    cd megahit
+    make
+    MEGAHIT_PATH=$APP_DIR/megahit
+    echo "installed MegaHit at $MEGAHIT_PATH"
+
+    # add environment variables to /environment file
+    echo "\nexport PATH=$MEGAHIT_PATH:\$PATH" >> /environment
+
+    # create mount points for TACC directories
+    mkdir /home1
+    mkdir /scratch
+    mkdir /work
+
+%test
+    . /environment
+    echo "PATH=${PATH}"
+
+    megahit --version
