@@ -37,3 +37,9 @@ deploy-app: clean files-delete files-upload apps-addupdate
 share-app:
 	systems-roles-addupdate -v -u <share-with-user> -r USER tacc-stampede-$(CYVERSEUSERNAME)
 	apps-pems-update -v -u <share-with-user> -p READ_EXECUTE $(APP)-$(VERSION)
+
+lytic-rsync-dry-run:
+	rsync -n -arvzP --delete --exclude-from=rsync.exclude -e "ssh -A -t hpc ssh -A -t lytic" ./ :project/imicrobe/apps/imicrobe-MegaHit
+
+lytic-rsync:
+	rsync -arvzP --delete --exclude-from=rsync.exclude -e "ssh -A -t hpc ssh -A -t lytic" ./ :project/imicrobe/apps/imicrobe-MegaHit
