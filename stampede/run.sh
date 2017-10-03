@@ -1,7 +1,7 @@
 #!/bin/bash -xe
 
-$INPUT_FILE=$1
-$OUTPUT_DIR=$2
+INPUT_FILE=$1
+OUTPUT_DIR=$2
 
 module load singularity
 
