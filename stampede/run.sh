@@ -2,4 +2,24 @@
 
 module load singularity
 
-singularity run imicrobe-MegaHit.img $@
+OUT_DIR="-o $PWD/megahit-out"
+
+while getopts :o OPT; do
+  case $OPT in
+    o)
+      OUT_DIR="$OPTARG"
+      ;;
+    :)
+      echo "Error: Option -$OPTARG requires an argument."
+      exit 1
+      ;;
+    \?)
+      echo "Error: Invalid option: -${OPTARG:-""}"
+      exit 1
+  esac
+done
+
+echo "output directory   :   \"${OUT_DIR}\""
+echo "all other arguments:   \"$@\""
+
+singularity run imicrobe-megahit.img ${OUT_DIR} $@
