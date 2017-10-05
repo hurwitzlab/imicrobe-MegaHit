@@ -18,13 +18,13 @@ From: ubuntu:latest
     APP_DIR=/megahit-app
     mkdir -p $APP_DIR
 
-    # install MegaHit
+    # install MEGAHIT
     cd $APP_DIR
     git clone https://github.com/voutcn/megahit.git
     cd megahit
     make
     MEGAHIT_PATH=$APP_DIR/megahit
-    echo "installed MegaHit at $MEGAHIT_PATH"
+    echo "installed MEGAHIT at $MEGAHIT_PATH"
 
     # add environment variables to /environment file
     echo "\nexport PATH=$MEGAHIT_PATH:\$PATH" >> /environment
