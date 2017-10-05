@@ -21,7 +21,7 @@ iget-container:
 test:
 	sbatch test.sh
 
-jobs-submit:
+submit-test-job:
 	jobs-submit -F stampede/job.json
 
 files-delete:
