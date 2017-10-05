@@ -2,8 +2,8 @@ Bootstrap: docker
 From: ubuntu:latest
 
 %runscript
-
-    echo "Hello!"
+    . /environment
+    megahit $@
 
 %setup
     # mount the imicrobe-MegaHit directory for use in %post

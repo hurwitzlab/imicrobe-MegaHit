@@ -6,34 +6,34 @@
   "defaultMaxRunTime": "12:00:00",
   "defaultNodeCount": 1,
   "defaultQueue": "serial",
-  "deploymentPath": "<developer>/applications/app-name-0.0.1/stampede",
+  "deploymentPath": "jklynch/applications/imicrobe-megahit-0.0.1/stampede",
   "deploymentSystem": "data.iplantcollaborative.org",
-  "executionSystem": "tacc-stampede-<developer>",
+  "executionSystem": "tacc-stampede-jklynch",
   "executionType": "HPC",
   "helpURI": "http://protocols.io",
-  "label": "Hurwitz Lab CyVerse App Template",
-  "longDescription": "Hurwitz Lab CyVerse App Template",
+  "label": "iMicrobe MEGAHIT",
+  "longDescription": "iMicrobe MEGAHIT Assembler",
   "modules": [],
-  "name": "app-name",
+  "name": "imicrobe-megahit",
   "ontology": [
     "http://sswapmeet.sswap.info/agave/apps/Application"
   ],
   "parallelism": "SERIAL",
-  "shortDescription": "Hurwitz Lab CyVerse App Template",
+  "shortDescription": "iMicrobe MEGAHIT",
   "tags": [
-    "Hurwitz",
-    "CyVerse",
-    "App"
+    "iMicrobe",
+    "megahit",
+    "assembly"
   ],
   "templatePath": "template.sh",
   "testPath": "test.sh",
   "version": "0.0.1",
   "inputs": [
     {
-      "id": "INPUT_DIR",
+      "id": "FORWARD_READS",
       "value": {
-        "default": "this is needed",
-        "required": true,
+        "default": "",
+        "required": false,
         "visible": true
       },
       "semantics": {
@@ -42,48 +42,33 @@
         ]
       },
       "details": {
-        "description": "Input Directory",
-        "label": "Input directory",
-        "argument": "",
-        "showArgument": true
-      }
-    }
-  ],
-  "parameters": [
-    {
-      "id": "primer",
-      "value": {
-        "default": "ATTAGAWACCCVNGTAGTCC",
-        "required": true,
-        "type": "string",
-        "visible": true
-      },
-      "semantics": {
-      },
-      "details": {
-        "argument": "--primer",
-        "description": "primer",
-        "label": "primer",
+        "description": "Forward Reads Input FASTA/Q File",
+        "label": "Input file",
+        "argument": "-1",
         "showArgument": true
       }
     },
     {
-      "id": "minimum-overlap",
+      "id": "REVERSE_READS",
       "value": {
-        "default": 20,
-        "required": true,
-        "type": "number",
+        "default": "",
+        "required": false,
         "visible": true
       },
       "semantics": {
+        "fileTypes": [
+          "raw-0"
+        ]
       },
       "details": {
-        "argument": "--min-overlap",
-        "description": "minimum overlap",
-        "label": "minimum overlap",
+        "description": "Reverse Reads Input FASTA/Q File",
+        "label": "Input file",
+        "argument": "-2",
         "showArgument": true
       }
     }
+
   ],
+  "parameters": [],
   "outputs": []
 }

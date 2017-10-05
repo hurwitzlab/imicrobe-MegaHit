@@ -1,4 +1,4 @@
-APP = imicrobe-MegaHit
+APP = imicrobe-megahit
 VERSION = 0.0.1
 EMAIL = $(CYVERSEUSERNAME)@email.arizona.edu
 
@@ -11,10 +11,10 @@ container:
 	sudo singularity bootstrap singularity/$(APP).img singularity/$(APP).def
 
 iput-container:
-	iput -K singularity/$(APP).img
+	iput -fK singularity/$(APP).img
 
 iget-container:
-	iget -K $(APP).img
+	iget -fK $(APP).img
 	mv $(APP).img stampede/
 
 test:

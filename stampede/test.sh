@@ -28,4 +28,4 @@ fi
 
 mkdir -p $OUTPUT_DIR
 
-./run.sh $INPUT_FILE $OUTPUT_DIR
+./run.sh -r $INPUT_FILE -o $OUTPUT_DIR
