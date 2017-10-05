@@ -26,6 +26,7 @@ if [[ -d $OUTPUT_DIR ]]; then
   rm -rf $OUTPUT_DIR
 fi
 
-mkdir -p $OUTPUT_DIR
+# megahit gets upset if the output directory exists
+#mkdir -p $OUTPUT_DIR
 
 ./run.sh -r $INPUT_FILE -o $OUTPUT_DIR
