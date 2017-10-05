@@ -13,9 +13,10 @@ while getopts :o OPT; do
       echo "Error: Option -$OPTARG requires an argument."
       exit 1
       ;;
-    \?)
-      echo "Error: Invalid option: -${OPTARG:-""}"
-      exit 1
+    # allow options like -r and -12 to pass through
+    #\?)
+    #  echo "Error: Invalid option: -${OPTARG:-""}"
+    #  exit 1
   esac
 done
 
