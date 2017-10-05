@@ -82,7 +82,7 @@
       "details": {
         "description": "Interleaved Paired-End Reads Input FASTA/Q File",
         "label": "Interleaved Reads",
-        "argument": "-12",
+        "argument": "--12",
         "showArgument": true
       }
     },
