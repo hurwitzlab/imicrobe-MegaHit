@@ -44,7 +44,7 @@
       "details": {
         "description": "Forward Reads Input FASTA/Q File",
         "label": "Forward Reads",
-        "argument": "-1",
+        "argument": "-1 ",
         "showArgument": true
       }
     },
@@ -63,7 +63,7 @@
       "details": {
         "description": "Reverse Reads Input FASTA/Q File",
         "label": "Reverse Reads",
-        "argument": "-2",
+        "argument": "-2 ",
         "showArgument": true
       }
     },
@@ -82,7 +82,7 @@
       "details": {
         "description": "Interleaved Paired-End Reads Input FASTA/Q File",
         "label": "Interleaved Reads",
-        "argument": "--12",
+        "argument": "--12 ",
         "showArgument": true
       }
     },
@@ -101,7 +101,7 @@
       "details": {
         "description": "Single-End Reads Input FASTA/Q File",
         "label": "Single-End Reads",
-        "argument": "-r",
+        "argument": "-r ",
         "showArgument": true
       }
     }
