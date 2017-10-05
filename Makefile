@@ -9,6 +9,7 @@ container:
 	rm -f stampede/$(APP).img
 	sudo singularity create --size 512 stampede/$(APP).img
 	sudo singularity bootstrap stampede/$(APP).img singularity/$(APP).def
+	sudo chown --reference=singularity/$(APP).def stampede/$(APP).img
 
 iput-container:
 	iput -fK stampede/$(APP).img
