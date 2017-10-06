@@ -45,7 +45,8 @@
         "description": "Forward Reads Input FASTA/Q File",
         "label": "Forward Reads",
         "argument": "-1 ",
-        "showArgument": true
+        "showArgument": true,
+        "repeatArgument": true
       }
     },
     {
@@ -64,7 +65,8 @@
         "description": "Reverse Reads Input FASTA/Q File",
         "label": "Reverse Reads",
         "argument": "-2 ",
-        "showArgument": true
+        "showArgument": true,
+        "repeatArgument": true
       }
     },
     {
@@ -83,7 +85,8 @@
         "description": "Interleaved Paired-End Reads Input FASTA/Q File",
         "label": "Interleaved Reads",
         "argument": "--12 ",
-        "showArgument": true
+        "showArgument": true,
+        "repeatArgument": true
       }
     },
     {
@@ -102,11 +105,28 @@
         "description": "Single-End Reads Input FASTA/Q File",
         "label": "Single-End Reads",
         "argument": "-r ",
-        "showArgument": true
+        "showArgument": true,
+        "repeatArgument": true
       }
     }
 
   ],
-  "parameters": [],
+  "parameters": [
+    {
+      "id": "ADDITIONAL_ARGS",
+      "value": {
+        "default": "",
+        "required": false,
+        "type": "string",
+        "visible": true
+      },
+      "details": {
+        "description": "Additional command line arguments for megahit",
+        "label": "Additional Command Line Arguments",
+        "argument": "",
+        "showArgument": false
+      }
+    }
+  ],
   "outputs": []
 }

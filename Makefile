@@ -17,6 +17,7 @@ iput-container:
 iget-container:
 	iget -fK $(APP).img
 	mv $(APP).img stampede/
+	irm $(APP).img
 
 test:
 	sbatch test.sh

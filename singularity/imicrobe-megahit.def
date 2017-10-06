@@ -12,11 +12,15 @@ From: ubuntu:latest
 
 %post
     apt update
-    apt install -y apt-utils git zlib1g-dev zip build-essential python
+    apt install -y apt-utils git zlib1g-dev zip build-essential python python3
 
     # create a directory for installed dependencies
     APP_DIR=/megahit-app
     mkdir -p $APP_DIR
+
+    # install scripts
+    mkdir /scripts
+    cp /imicrobe-MegaHit/scripts/agave_to_megahit_cmd_line_args.py /scripts/agave_to_megahit_cmd_line_args.py
 
     # install MEGAHIT
     cd $APP_DIR
