@@ -1,4 +1,14 @@
 """
+Usage:
+
+  python agave_to_megahit_cmd_line-args.py \
+      /path/to/output/directory \
+      -1 /path/to/forward/reads \
+      -1 /path/to/more/forward/reads \
+      -2 /path/to/reverse/reads \
+      -2 /path/to/more/reverse/reads \
+      -some more -options
+
 Convert Agave app arguments such as
 
   -r file1 -r file2 -r file3 -x -y -z
@@ -46,8 +56,7 @@ def agave_to_megahit_cmd_line_args(argv):
 
 def convert_agave_args_to_megahit_cmd_line(agave_cmd_line_args):
 
-    # the options in this table need conversion from
-    # Agave to MEGAHIT
+    # the options in this table need conversion from Agave to MEGAHIT
     input_option_table = {
         '-1': list(),
         '-2': list(),
@@ -83,8 +92,8 @@ if __name__ == '__main__':
 
 
 def test_agave_to_megahit_cmd_line_args():
-    cmd_line_args = agave_to_megahit_cmd_line_args(['/output/dir', '-1', 'file1', '-2', 'file2'])
-    assert cmd_line_args == '-o /output/dir -1 file1 -2 file2'
+    cmd_line_args = agave_to_megahit_cmd_line_args(['/output/dir', '-1', 'file1', '-1', 'file2', '-2', 'file3'])
+    assert cmd_line_args == '-o /output/dir -1 file1,file2 -2 file3'
 
 
 def test_paired_end_conversions():
