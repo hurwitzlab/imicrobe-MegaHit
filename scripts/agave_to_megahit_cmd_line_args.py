@@ -9,17 +9,46 @@ to MEGAHIT command line arguments such as
 
 In addition assume the first positional argument is the output directory and give it -o.
 
+Since this script may also be invoked in contexts other than an Agave job it should
+leave normal MEGAHIT command line args alone.
+
 """
 import argparse
 import io
+import sys
 
 
-def agave_to_megahit_cmd_line_args():
-    known_args, unknown_args = get_args()
-    #print(known_args)
-    #print(unknown_args)
+def get_args(argv):
+    """
+    The first positional argument is the output directory. Remaining command line arguments
+    either need conversion from Agave repeated-option format or can be passed directly to
+    MEGAHIT.
 
-    input_file_table = {
+    :return: (1-ple of output directory, tuple of everything else)
+    """
+    arg_parser = argparse.ArgumentParser()
+    arg_parser.add_argument('output_dir', help='Directory for MEGAHIT output.')
+    return arg_parser.parse_known_args(args=argv)
+
+
+def agave_to_megahit_cmd_line_args(argv):
+    output_arg, agave_cmd_line_args = get_args(argv)
+    megahit_cmd_line = convert_agave_args_to_megahit_cmd_line(agave_cmd_line_args)
+
+    cmd_line_args = io.StringIO()
+    cmd_line_args.write('-o ')
+    cmd_line_args.write(output_arg.output_dir)
+    cmd_line_args.write(' ')
+    cmd_line_args.write(megahit_cmd_line)
+
+    return cmd_line_args.getvalue()
+
+
+def convert_agave_args_to_megahit_cmd_line(agave_cmd_line_args):
+
+    # the options in this table need conversion from
+    # Agave to MEGAHIT
+    input_option_table = {
         '-1': list(),
         '-2': list(),
         '--12': list(),
@@ -28,30 +57,62 @@ def agave_to_megahit_cmd_line_args():
 
     additional_args = []
 
-    unknown_arg_list = list(unknown_args)
+    unknown_arg_list = list(agave_cmd_line_args)
     while len(unknown_arg_list) > 0:
         next_arg = unknown_arg_list.pop(0)
-        if next_arg in input_file_table.keys():
-            input_file_table[next_arg].append(unknown_arg_list.pop(0))
+        if next_arg in input_option_table.keys():
+            input_option_table[next_arg].append(unknown_arg_list.pop(0))
         else:
             additional_args.append(next_arg)
 
     cmd_line_args = io.StringIO()
-    cmd_line_args.write('-o ')
-    cmd_line_args.write(known_args.output_dir)
 
-    for opt, arg_list in input_file_table.items():
+    for opt, arg_list in [(opt_, input_option_table[opt_]) for opt_ in ('-1', '-2', '--12', '-r')]:
         if len(arg_list) > 0:
             cmd_line_args.write(' {} {}'.format(opt, ','.join(arg_list)))
 
-    print(cmd_line_args.getvalue())
+    if len(additional_args) > 0:
+        cmd_line_args.write(' ')
+        cmd_line_args.write(' '.join(additional_args))
 
-
-def get_args():
-    arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('output_dir', help='Directory for MEGAHIT output.')
-    return arg_parser.parse_known_args()
+    return cmd_line_args.getvalue().strip()
 
 
 if __name__ == '__main__':
-    agave_to_megahit_cmd_line_args()
+    print(agave_to_megahit_cmd_line_args(sys.argv))
+
+
+def test_agave_to_megahit_cmd_line_args():
+    cmd_line_args = agave_to_megahit_cmd_line_args(['/output/dir', '-1', 'file1', '-2', 'file2'])
+    assert cmd_line_args == '-o /output/dir -1 file1 -2 file2'
+
+
+def test_paired_end_conversions():
+    megahit_cmd_line_args = convert_agave_args_to_megahit_cmd_line(
+        ['-1', 'file1', '-2', 'file2', '-x', 'x', '-y', 'y', '-z', 'z']
+    )
+
+    assert megahit_cmd_line_args == '-1 file1 -2 file2 -x x -y y -z z'
+
+
+def test_all_agave_conversions():
+    megahit_cmd_line_args = convert_agave_args_to_megahit_cmd_line(
+        [
+            '-1', 'file1', '-x', 'x', '-1', 'file2',
+            '-2', 'file3', '-y', 'y', '-2', 'file4',
+            '--12', 'file5', '-z', '--12', 'file6',
+            '-r', 'file7', '-r', 'file8'
+        ]
+    )
+
+    assert megahit_cmd_line_args == '-1 file1,file2 -2 file3,file4 --12 file5,file6 -r file7,file8 -x x -y y -z'
+
+
+def test_no_conversion():
+    megahit_cmd_line_args = convert_agave_args_to_megahit_cmd_line(
+        [
+            '-1', 'file1,file2', '-x', 'x', '-2', 'file3,file4', '-y', 'y'
+        ]
+    )
+
+    assert megahit_cmd_line_args == '-1 file1,file2 -2 file3,file4 -x x -y y'
