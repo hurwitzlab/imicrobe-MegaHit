@@ -2,7 +2,7 @@
 Usage:
 
   python agave_to_megahit_cmd_line-args.py \
-      /path/to/output/directory \
+      -o /path/to/output/directory \
       -1 /path/to/forward/reads \
       -1 /path/to/more/forward/reads \
       -2 /path/to/reverse/reads \
@@ -17,7 +17,8 @@ to MEGAHIT command line arguments such as
 
   -r file1,file2,file3 -x -y -z
 
-In addition assume the first positional argument is the output directory and give it -o.
+In addition the optional -o argument specifies the output directory. If it is
+not given then the default '$PWD/megahit-out' will be passed to MEGAHIT.
 
 Since this script may also be invoked in contexts other than an Agave job it should
 leave normal MEGAHIT command line args alone.
@@ -25,6 +26,7 @@ leave normal MEGAHIT command line args alone.
 """
 import argparse
 import io
+import os
 import sys
 
 
@@ -37,7 +39,11 @@ def get_args(argv):
     :return: (1-ple of output directory, tuple of everything else)
     """
     arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument('output_dir', help='Directory for MEGAHIT output.')
+    arg_parser.add_argument(
+        '-o', '--output_dir',
+        required=False,
+        default=os.path.join(os.getcwd(), 'megahit-out'),
+        help='Directory for MEGAHIT output.')
     return arg_parser.parse_known_args(args=argv)
 
 
@@ -92,7 +98,10 @@ if __name__ == '__main__':
 
 
 def test_agave_to_megahit_cmd_line_args():
-    cmd_line_args = agave_to_megahit_cmd_line_args(['/output/dir', '-1', 'file1', '-1', 'file2', '-2', 'file3'])
+    cmd_line_args = agave_to_megahit_cmd_line_args(['-1', 'file1', '-1', 'file2', '-2', 'file3'])
+    assert cmd_line_args == '-o {} -1 file1,file2 -2 file3'.format(os.path.join(os.getcwd(), 'megahit-out'))
+
+    cmd_line_args = agave_to_megahit_cmd_line_args(['-o', '/output/dir', '-1', 'file1', '-1', 'file2', '-2', 'file3'])
     assert cmd_line_args == '-o /output/dir -1 file1,file2 -2 file3'
 
 
