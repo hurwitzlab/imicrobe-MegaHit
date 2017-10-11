@@ -3,6 +3,6 @@
   "appId": "imicrobe-megahit-0.0.1",
   "archive": true,
   "inputs": {
-    "SINGLE_ENDED_READS": "jklynch/E_coli_S_flexneri_0.001.fa"
+    "SINGLE_ENDED_READS": "jklynch/test/imicrobe-megahit/E_coli_S_flexneri_0.001.fa"
   }
 }
