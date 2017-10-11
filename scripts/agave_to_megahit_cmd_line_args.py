@@ -98,9 +98,11 @@ if __name__ == '__main__':
 
 
 def test_agave_to_megahit_cmd_line_args():
+    # default output directory
     cmd_line_args = agave_to_megahit_cmd_line_args(['-1', 'file1', '-1', 'file2', '-2', 'file3'])
     assert cmd_line_args == '-o {} -1 file1,file2 -2 file3'.format(os.path.join(os.getcwd(), 'megahit-out'))
 
+    # secified output directory
     cmd_line_args = agave_to_megahit_cmd_line_args(['-o', '/output/dir', '-1', 'file1', '-1', 'file2', '-2', 'file3'])
     assert cmd_line_args == '-o /output/dir -1 file1,file2 -2 file3'
 
