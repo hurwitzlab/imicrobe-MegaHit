@@ -43,3 +43,4 @@ From: ubuntu:latest
     echo "PATH=${PATH}"
 
     megahit --version
+    python3 --version

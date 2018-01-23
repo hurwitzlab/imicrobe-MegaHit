@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-module load singularity
+module load tacc-singularity
 
 MEGAHIT_CMD_LINE_ARGS=`singularity exec imicrobe-megahit.img python3 /scripts/agave_to_megahit_cmd_line_args.py $@`
 
