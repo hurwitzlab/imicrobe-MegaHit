@@ -3,6 +3,6 @@
   "appId": "imicrobe-megahit-0.0.2u1",
   "archive": true,
   "inputs": {
-    "SINGLE_ENDED_READS": "test/imicrobe-megahit/E_coli_S_flexneri_0.001.fa"
+    "SINGLE_ENDED_READS": "agave://data.iplantcollaborative.org/shared/imicrobe/test/apps/imicrobe-megahit/E_coli_S_flexneri_0.001.fa"
   }
 }
